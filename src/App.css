@@ -1,38 +1,282 @@
-.App {
-  text-align: center;
+/************
+Globals
+************/
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&family=Roboto:wght@300;400&display=swap');
+
+:root {
+  --blue: #0f9bd1;
+  --white: whitesmoke;
+  --gray1: #333333;
+  --gray2: #4F4F4F;
+  --gray3: #828282;
+  --gray4: #BDBDBD;
+  --gray5: #E0E0E0;
+  --gray6: #F2F2F2;
+  --display-font: "Roboto Slab",'Times New Roman', Times, serif;
+  --card-font: "Roboto", -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  --card-title: "Montserrat", sans-serif;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+
+*{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+html{
+  width: 100vw;
+
+}
+
+/************
+Navbar
+************/
+
+.navbar-dark {
+  background: var(--blue) !important;
+  color: var(--white) !important;
+  padding-left: .5rem;
+  padding-right: .5rem;
+}
+
+.brand-custom{
+  font-family: var(--display-font);
+  font-weight: 600;
+  color: var(--white);
+  font-size: 1.5rem;
+}
+
+.link-custom{
+  font-family: var(--card-font);
+  font-weight: 300;
+  font-size: 1.5rem;
+}
+
+.propic {
+  margin-left: .75rem;
+}
+
+.dropdown-toggle{
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.show{
+  border-radius: 1rem 1rem 0 0;
+}
+
+.dropdown-menu{
+  right: 0;
+  top: 1.9rem;
+  padding: 0;
+  background-color: var(--gray6);
+  border-radius: 0 0 .5rem .5rem;
+  border-top: none;
+  width: 100%;
+  height: 2.125rem;
+}
+
+.log-tag{
+  font-family: var(--card-font);
+  font-weight: 400;
+  color: var(--gray2);
+  font-size: 1rem;
+}
+
+.username{
+  font-family: var(--card-font);
+  font-weight: 400;
+  color: var(--gray3);
+  font-size: 1rem;
+}
+
+.dropdown-custom{
+  background-color: var(--gray6);
+  height: 2rem;
+  border-radius: 1rem;
+}
+
+.dropdown-toggle::after {
+  color: var(--gray1);
+}
+
+@media screen and (max-width: 991px){
+  .propic{
+    height: auto;
+    width: 2rem;
+  }
+  .brand-custom{
+    font-size: 4vw;
+  }
+  .navbar-dark{
+    padding: 1rem;
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/*********
+ Login page
+*********/
+
+.container-login {
+  display: flex;
+  justify-content: center;
+  padding-top: 3rem;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  background-color: var(--gray4);
+  box-shadow: 
+      inset 0px 1rem 2rem -2rem rgba(0, 0, 0, 0.7),
+      inset 0px -1rem 2rem -2rem rgba(0, 0, 0, 0.7); 
+}
+
+.login-card{
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 1.5rem;
+  box-shadow: 0 .5rem 1rem 0 rgba(0,0,0,0.2);
+  transition: 0.3s ease-in-out; 
+  width: 25vw;
+  height: 60vh;
+  background-color: var(--blue);
+}
+
+.login-card:hover{
+  box-shadow: 0 1.5rem 2rem 0 rgba(0,0,0,0.2);
+}
+
+.login-text{
+  font-family: var(--card-title);
+  font-weight: 600;
+  color: var(--white);
+  font-size: 2.5rem;
+}
+
+.login-btn{
+  font-family: var(--card-font) !important;
+  margin-top: 2rem;
+  height: auto;
+  width: 40%;
+}
+
+/*********
+Title Form
+*********/
+
+.form-title {
+  font-family: var(--display-font);
+  color: var(--blue);
+  font-weight: 700;
+  font-stretch: condensed;
+  font-size: 2rem;
+  margin-top: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.form-label {
+  font-weight: 700;
+  font-stretch:extra-expanded;
+  font-family: var(--display-font);
+  color: var(--gray2);
+  font-size: 1.75rem;  
+}
+
+.title-form-control {
+  margin-left: 4rem;
+  justify-content: left;
+  text-align: left;
+  display:flex;
+  flex-direction: column;
+  height: 10rem;
+}
+
+.error-msg {
+  color: var(--gray1);
+  font-family: var(--card-font);
+  font-size: 1.25rem;
+  font-weight: 300;
+  text-align: left;
+}
+
+.form-btn {
+  background-color: var(--gray4);
+  color: var(--blue);
+}
+
+.form-btn:hover {
+  background-color: var(--gray1);
+  color: var(--gray4);
+}
+
+#title {
+  width: 100%;
+  min-width: 11rem;
+  max-width: 13rem;
+  min-height: 2.25rem;
+  border: none;
+  border-radius: 1.25rem;
+  padding: 0.25rem .25rem .25rem 1rem;
+  font-family: var(--card-font);
+  font-size: 1.25rem;
+  font-weight: 300;
+  color: var(--gray1);
+  line-height: 1.1;
+  background-color: var(--gray5);
+  text-align: left;
+}
+
+#image {
+  width: 100%;
+  min-width: 11rem;
+  max-width: 13rem;
+  min-height: 2.25rem;
+  border: none;
+  border-radius: 1.25rem;
+  padding: 0.25rem .25rem .25rem 1rem;
+  font-family: var(--card-font);
+  font-size: 1.25rem;
+  font-weight: 300;
+  color: var(--gray1);
+  line-height: 1.1;
+  background-color: var(--gray5);
+  text-align: left;
+}
+
+/**********
+Home Page
+**********/
+
+
+.home{ 
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  background-color: var(--white);
+  clip-path: polygon(0 0, 100% 0, 100% 25%, 50% 50%, 0 25%);
 }
 
-.App-link {
-  color: #61dafb;
+.home::after{
+  content: "";
+  position: absolute;
+  height: 50vh;
+  width: 100vw;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.title{
+  margin-top: 5rem;
+  font-size: 10rem;
+  color: var(--blue);
 }
