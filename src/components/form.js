@@ -1,0 +1,214 @@
+import React, {useState } from 'react'
+import {v4 as uuid} from 'uuid'
+import { Formik, Form as Formk ,Field, ErrorMessage } from 'formik'
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
+import * as yup from 'yup'
+
+// Formik  Props
+const initialValues = {
+    headline: '',
+    text: '',
+    media: '',
+    mediaCredit: '',
+    mediaCaption: '',
+    dateStart: '',
+    dateEnd: '',
+}
+
+const validationSchema = yup.object({
+    headline: yup.string().required('Required'),
+    text: yup.string(),
+    media: yup.string().url("Must be a link to youtube, vimeo, instagram, twitter status, wikipedia, or an image"),
+    mediaCaption: yup.string(),
+    mediaCredit: yup.string(),
+    dateStart: yup.string().required('Start Date/Event Date Required'),
+    dateEnd: yup.string(),
+})
+
+
+const Form = ({onSubmitForm, events, setEvents}) => {
+
+    const [startDate, setStartDate] = useState(new Date());
+    const [endDate, setEndDate] = useState(new Date());
+    const today = new Date();
+
+    function easyDate(date) {
+        return date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate();
+    }
+
+    const onSubmit = (values) => {
+        console.log('Form data', values)
+        console.log(easyDate(today));
+        setEvents([...events,{ 
+            title: values.headline, 
+            text: values.text, 
+            media: values.media, 
+            mediaCredit: values.mediaCredit, 
+            mediaCaption: values.mediaCaption,
+            startDate: values.dateStart,
+            endDate: values.dateEnd,
+            sDate: startDate,
+            eDate: endDate,
+            id: uuid()}]);
+    } 
+
+
+    const startDateChange = (values) => {
+        values.dateStart = (easyDate(today) === easyDate(startDate) ? "" : easyDate(startDate));
+    }
+
+    const endDateChange = (values) => {
+        values.dateEnd = (easyDate(today) === easyDate(endDate) ? "" : easyDate(endDate));;
+    }
+
+    return (
+        <Formik
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+            onSubmit={onSubmit}
+        >
+        {({
+            values
+        }) => (
+            <Formk className="formk">
+                <div className="form-row">
+                    <div className="form-field">
+                        <label htmlFor="headline" className="form-label">Headline:</label>
+                        <Field type='text' id='headline' name='headline' className="form-input"/>
+                        <ErrorMessage name='headline'>{msg => <div className="error-msg">{msg}</div>}</ErrorMessage>
+                    </div>
+                    <div className="form-field">
+                        <label htmlFor="description" className="form-label">Description:</label>
+                        <Field as='textarea' type='text' id='text' name='text' className="form-input txt-area"/>
+                        <ErrorMessage name='text'>{msg => <div className="error-msg">{msg}</div>}</ErrorMessage>
+                    </div>  
+                </div>
+                <div className="form-row">  
+                    <div className="form-field">
+                        <label htmlFor="media link" className="form-label">Media Link:</label>
+                        <Field type='text' id='media' name='media' className="form-input media-link"/>
+                        <ErrorMessage name='media'>{msg => <div className="error-msg">{msg}</div>}</ErrorMessage>
+                    </div>
+                    <div className="form-field">
+                        <label htmlFor="media credit" className="form-label">Media Credit:</label>
+                        <Field type='text' id='mediaCredit' name='mediaCredit' className="form-input"/>
+                        <ErrorMessage name='mediaCredit'>{msg => <div className="error-msg">{msg}</div>}</ErrorMessage>
+                    </div>
+                    <div className="form-field">
+                        <label htmlFor="media caption" className="form-label">Media Caption:</label>
+                        <Field type='text' id='mediaCaption' name='mediaCaption' className="form-input"/>
+                        <ErrorMessage name='mediaCaption'>{msg => <div className="error-msg">{msg}</div>}</ErrorMessage>
+                    </div> 
+                </div>
+                <div className="form-row">
+                    <div className="form-field">
+                        <label htmlFor="start date" className="form-label">Start/Event Date:</label>
+                        <Field className="cal-input form-input" type="text" id="dateStart" name="dateStart" disabled={true} value={easyDate(startDate)} onChange={startDateChange(values)}></Field>
+                        <Calendar onChange={setStartDate} value={startDate} defaultView="decade"  defaultValue={new Date()} className="cal"/>
+                        <ErrorMessage name="dateStart">{msg => <div className="error-msg">{msg}</div>}</ErrorMessage>
+                    </div>
+                    <div className="form-field">
+                        <label htmlFor="end date" className="form-label">End Date:</label>
+                        <Field className="cal-input form-input" type="text" id="dateEnd" name="dateEnd" disabled={true} value={easyDate(endDate)} onChange={endDateChange(values)}></Field>
+                        <Calendar onChange={setEndDate} value={endDate} defaultView="decade"  defaultValue={(new Date())} className="cal"/>
+                        <ErrorMessage name="dateEnd">{msg => <div className="error-msg">{msg}</div>}</ErrorMessage>
+                    </div>
+                </div>
+                
+                <div className="submit-btn">
+                    <button className="todo-button" type="submit">
+                        <h1 className="add-event">Add Event </h1>
+                        <i className="fas fa-plus"></i>
+                    </button>
+                    <button className="todo-button" onClick={onSubmitForm}>
+                        <h1 className="add-event">Submit</h1>
+                        <i class="fas fa-check"></i>
+                    </button>
+                </div>
+            </Formk>
+        )}
+        </Formik>
+        
+    );   
+}
+
+
+export default Form
+
+/*
+if(values.media === ""){
+            if(values.dateEnd === ""){
+                setEvents([...events,{ 
+                    start_date: {
+                        year: startDate.getFullYear(),
+                        month: (startDate.getMonth() + 1),
+                        day: startDate.getDate(),
+                    },
+                    text: {
+                        headline: values.headline,
+                        text: values.text
+                    }
+                }]);
+            }else{
+                setEvents([...events,{ 
+                    start_date: {
+                        year: startDate.getFullYear(),
+                        month: (startDate.getMonth() + 1),
+                        day: startDate.getDate()
+                    },
+                    end_date: {
+                        year: endDate.getFullYear(),
+                        month: (endDate.getMonth() + 1),
+                        day: endDate.getDate()
+                    },
+                    text: {
+                        headline: values.headline,
+                        text: values.text
+                    }
+                }]);
+            }
+        }else{
+            if(values.dateEnd === ""){
+                console.log("start Date", startDate)
+                setEvents([...events,{
+                    media: {
+                        url: values.media,
+                        caption: values.mediaCaption,
+                        credit: values.mediaCredit
+                    }, 
+                    start_date: {
+                        year: startDate.getFullYear(),
+                        month: (startDate.getMonth() + 1),
+                        day: startDate.getDate()
+                    },
+                    text: {
+                        headline: values.headline,
+                        text: values.text
+                    }
+                }]);
+            }else{
+                setEvents([...events,{
+                    media: {
+                        url: values.media,
+                        caption: values.mediaCaption,
+                        credit: values.mediaCredit
+                    }, 
+                    start_date: {
+                        year: startDate.getFullYear(),
+                        month: (startDate.getMonth() + 1),
+                        day: startDate.getDate()
+                    },
+                    end_date: {
+                        year: endDate.getFullYear(),
+                        month: (endDate.getMonth() + 1),
+                        day: endDate.getDate()
+                    },
+                    text: {
+                        headline: values.headline,
+                        text: values.text
+                    }
+                }]);
+            }
+        }
+    */

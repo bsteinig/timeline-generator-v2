@@ -62,16 +62,16 @@ export const logOut = (setuser) => {
 export const writeUserData = (data) => {
   var defaultDatabase = firebase.database();
   let ref = defaultDatabase.ref("/")
-  let newWorkout = ref.child(`workouts/${data.user}`).push();
-  newWorkout.set(data)
+  let newTimeline = ref.child(`timelines/${data.user}`).push();
+  newTimeline.set(data)
   console.log(data);
 }
 
 export const getUserData = (user, callback) => {
   var defaultDatabase = firebase.database();
   let ref = defaultDatabase.ref("/");
-  let workouts = ref.child(`workouts/${user.uid}`);
-  workouts.on('value', (snapshot) => {
+  let timelines = ref.child(`timelines/${user.uid}`);
+  timelines.on('value', (snapshot) => {
     callback(snapshot.val());
   })
   // ref.on("value", snapshot => {

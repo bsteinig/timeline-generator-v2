@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 import Home from './pages/Home';
+import Create from './pages/Create'
+import View from './pages/View'
 import NotFoundPage from './pages/404'
 import SignInPage, {Logout} from './components/login';
 import Navbar from './components/navbar'
@@ -9,6 +11,8 @@ import './App.css';
 
 
 function App() {
+  
+
   const [user, setUser] = useState(null);
   let userTmp = localStorage.getItem("user");
   if(userTmp){
@@ -22,6 +26,8 @@ function App() {
         <Route exact path="/" component={Home} />
         <Route exact path="/login" component={() => <SignInPage user={user} setUser={setUser}/>} />
         <Route exact path="/logout" component={() => <Logout setuser={setUser}/>} />
+        <PrivateRoute exact path="/create" user={userTmp} component={() => <Create user={userTmp} />} />
+        <PrivateRoute exact path="/view" user={userTmp} component={() => <View user={userTmp} />} />
         <Route exact path="/404" component={NotFoundPage} />
         <Redirect to="/404" /> 
       </Switch>
