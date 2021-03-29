@@ -5,7 +5,7 @@ function Home(){
 
     return(
         <div className="home">
-            <h1  className="title">Healthy Habits</h1>
+            <h1  className="title">Timeline Generator</h1>
         </div>
     )
 }

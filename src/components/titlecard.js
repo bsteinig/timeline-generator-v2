@@ -5,7 +5,7 @@ const TitleCard = ({ fakeId, handleSelect, lastModified, title}) => {
     // <h1>{(fakeId+1) < 10 ? "0"+(fakeId+1) : (fakeId+1)}</h1>
 
     return (
-            <li key={fakeId}>
+            <li key={`${fakeId}`} id={fakeId}>
                 <button onClick={() => handleSelect(fakeId)} className="card" title={fakeId+1}>
                     <div className="todo-item" >
                         <h4 className="tag">Title:</h4>

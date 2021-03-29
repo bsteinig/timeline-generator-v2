@@ -37,20 +37,46 @@ const Form = ({onSubmitForm, events, setEvents}) => {
         return date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate();
     }
 
-    const onSubmit = (values) => {
+    function yearMonthDay(date) {
+        return [date.getFullYear(), (date.getMonth()+1), date.getDate()];
+    }
+
+    const onSubmit = (values, submitProps) => {
         console.log('Form data', values)
         console.log(easyDate(today));
-        setEvents([...events,{ 
-            title: values.headline, 
-            text: values.text, 
-            media: values.media, 
-            mediaCredit: values.mediaCredit, 
-            mediaCaption: values.mediaCaption,
-            startDate: values.dateStart,
-            endDate: values.dateEnd,
-            sDate: startDate,
-            eDate: endDate,
-            id: uuid()}]);
+        var sDate = yearMonthDay(startDate);
+        var eDate;
+        if(easyDate(today) === easyDate(endDate)){
+            eDate = ["","",""];
+        }else{
+            eDate = yearMonthDay(endDate);
+        }
+        setEvents([...events,{
+            media: {
+                url: values.media,
+                caption: values.mediaCaption,
+                credit: values.mediaCredit
+            }, 
+            start_date: {
+                year: sDate[0],
+                month: sDate[1],
+                day: sDate[2],
+            },
+            end_date: {
+                year: eDate[0],
+                month: eDate[1],
+                day: eDate[2],
+            },
+            text: {
+                headline: values.headline,
+                text: values.text
+            },
+            id: uuid()
+        }]);
+        console.log(submitProps)
+        submitProps.resetForm()
+        setStartDate(new Date());
+        setEndDate(new Date());
     } 
 
 
@@ -105,13 +131,13 @@ const Form = ({onSubmitForm, events, setEvents}) => {
                     <div className="form-field">
                         <label htmlFor="start date" className="form-label">Start/Event Date:</label>
                         <Field className="cal-input form-input" type="text" id="dateStart" name="dateStart" disabled={true} value={easyDate(startDate)} onChange={startDateChange(values)}></Field>
-                        <Calendar onChange={setStartDate} value={startDate} defaultView="decade"  defaultValue={new Date()} className="cal"/>
+                        <Calendar onChange={setStartDate} value={startDate} defaultView="decade"  defaultValue={startDate} className="cal"/>
                         <ErrorMessage name="dateStart">{msg => <div className="error-msg">{msg}</div>}</ErrorMessage>
                     </div>
                     <div className="form-field">
                         <label htmlFor="end date" className="form-label">End Date:</label>
                         <Field className="cal-input form-input" type="text" id="dateEnd" name="dateEnd" disabled={true} value={easyDate(endDate)} onChange={endDateChange(values)}></Field>
-                        <Calendar onChange={setEndDate} value={endDate} defaultView="decade"  defaultValue={(new Date())} className="cal"/>
+                        <Calendar onChange={setEndDate} value={endDate} defaultView="decade"  defaultValue={(endDate)} className="cal"/>
                         <ErrorMessage name="dateEnd">{msg => <div className="error-msg">{msg}</div>}</ErrorMessage>
                     </div>
                 </div>
@@ -123,7 +149,7 @@ const Form = ({onSubmitForm, events, setEvents}) => {
                     </button>
                     <button className="todo-button" onClick={onSubmitForm}>
                         <h1 className="add-event">Submit</h1>
-                        <i class="fas fa-check"></i>
+                        <i className="fas fa-check"></i>
                     </button>
                 </div>
             </Formk>

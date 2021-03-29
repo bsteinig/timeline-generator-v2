@@ -7,7 +7,7 @@ import '../App.css';
 function View({user}){
 
     const [timelines, setTimelines] = useState([]);
-    const [selected, setSelected] = useState(1);
+    const [selected, setSelected] = useState(-1);
     const [loading, setLoading] = useState(true);
     const [data, setData] = useState(null);
     const [pulled, setPulled] = useState(false);
@@ -18,9 +18,10 @@ function View({user}){
               if (retrivedData) {
                 setData(retrivedData);
                 setPulled(true);
+                setTimelines([Object.keys(retrivedData)]);
+                setLoading(false);
+              }else{
                 setLoading(false)
-                var d = (Object.keys(retrivedData));
-                setTimelines(d);
               }
             });
           }
@@ -30,9 +31,13 @@ function View({user}){
         return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
     }
 
+    const generateJSON = () => {
+        console.log(data[timelines[0][selected]].timeline)
+    }
+
     const handleSelect = (index) => {
         setSelected(index);
-        console.log(data[timelines[index]])
+        window.timeline = new window.TL.Timeline('timeline-embed', data[timelines[0][index]].timeline);
     }
 
     //console.log(Object.keys(data))
@@ -54,7 +59,7 @@ function View({user}){
             <div>
             {data ? 
             <div className="list-container">
-                <div class="spacer"></div>
+                <div className="spacer"></div>
                 <ul className="card-list">
                 {Object.keys(data).map((timeline,index) => {
                         return (
@@ -66,13 +71,37 @@ function View({user}){
                         />
                         );
                 })}
+                <li key='-1' className="add-timeline">
+                    <a href="/create" className="big-plus"><i className="fas fa-plus"></i></a>
+                </li>
                 </ul>
                 <div className="timeline-view">
+                    <div className="selected">
+                        <h3>Selected:&nbsp;</h3>
+                        {selected === -1 ?
+                            <h3>Click to select a timeline, or create a new one</h3>
+                        :
+                            <h3>{data[timelines[0][selected]].timeline.title.text.headline}</h3>
+                        }   
+                    </div>
                     <div id='timeline-embed'></div>
+                    {selected === -1 ?
+                        <></>
+                    :
+                        <button onClick={generateJSON}>log JSON</button>
+                    }
                 </div>
             </div>
             :
-            <h1 className="empty-view">You haven't created any timelines</h1>
+            <div>
+            <div className="spacer"></div>
+                <ul className="card-list">
+                    <li key='-1' className="add-timeline">
+                        <a href="/create" className="big-plus"><i className="fas fa-plus"></i></a>
+                    </li>
+                </ul>
+                <h1 className="empty-view">You haven't created any timelines</h1>
+            </div>
             }
             </div>
             }
