@@ -795,5 +795,92 @@ View Page
   width: 80vw;
   height: 75vh;
   background-color: var(--blue);
+}
+
+.timeline-credit{
   margin-bottom: 4rem;
+}
+
+/********
+Export Section
+********/
+
+.export-section{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.export-btn{
+  font-family: var(--card-title);
+  font-size: 1.5rem;
+  color: var(--blue);
+  margin-bottom: 2rem;
+  padding: 1rem 2rem;
+  border-radius: 1.5rem;
+  text-align: center;
+  background-color: var(--blue);
+  color: var(--gray6);
+  cursor: pointer;
+}
+
+.export-btn:hover{
+  background-color: var(--gray4);
+  color: var(--blue);
+}
+
+.export-text{
+  height: 22rem;
+  width: 48rem;
+  margin-bottom: 3rem;
+  min-height: 10rem;
+  max-height: 30rem;
+}
+
+/***********
+ Import Page
+***********/
+
+.import-page{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.import-txt{
+  margin-top: 3rem;
+}
+
+.import-btn{
+  background-color: var(--gray5);
+  color: var(--blue);
+  font-family: var(--card-title);
+  font-size: 1.5rem;
+  height: 3rem;
+  width: 22rem;
+  border-radius: 1.5rem;
+  border: none;
+  margin-bottom: 4rem;
+}
+
+.import-btn:hover{
+  background-color: var(--gray2);
+  color: var(--gray6);
+}
+
+.import-timeline{
+  margin-bottom: 4rem;
+}
+
+@media screen and (max-width: 780px){
+  .export-text{
+    width: 95vw;
+  }
+}
+
+@media screen and (max-width: 450px){
+  .import-btn{
+    width: 75vw;
+  }
 }

@@ -32,6 +32,11 @@ const Navbar = ({user}) => {
                   View
                 </a>
               </li>
+              <li className="nav-item">
+                <a className="nav-link link-custom" href="/import">
+                  Import
+                </a>
+              </li>
             </ul>
             <ul className="navbar-nav ml-auto">
                 {user ? 

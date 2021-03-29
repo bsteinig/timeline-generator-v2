@@ -4,6 +4,7 @@ import { getUserData } from "../database/firebase";
 import TitleCard from '../components/titlecard'
 import '../App.css';
 
+
 function View({user}){
 
     const [timelines, setTimelines] = useState([]);
@@ -31,12 +32,9 @@ function View({user}){
         return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
     }
 
-    const generateJSON = () => {
-        console.log(data[timelines[0][selected]].timeline)
-    }
-
     const handleSelect = (index) => {
         setSelected(index);
+        console.log(index)
         window.timeline = new window.TL.Timeline('timeline-embed', data[timelines[0][index]].timeline);
     }
 
@@ -85,10 +83,14 @@ function View({user}){
                         }   
                     </div>
                     <div id='timeline-embed'></div>
+                    <p className="timeline-credit">Timeline Generation Created by: <a href="https://knightlab.northwestern.edu/" rel="noreferrer noopener" target="_blank">The Northwestern University Knight Lab</a>.</p>
                     {selected === -1 ?
                         <></>
                     :
-                        <button onClick={generateJSON}>log JSON</button>
+                        <div className="export-section">
+                            <h3 className="export-btn">Export Timeline</h3>
+                            <textarea className="export-text">{JSON.stringify(data[timelines[0][selected]].timeline)}</textarea>
+                        </div>
                     }
                 </div>
             </div>

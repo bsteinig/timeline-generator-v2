@@ -8,6 +8,7 @@ import SignInPage, {Logout} from './components/login';
 import Navbar from './components/navbar'
 import PrivateRoute from './PrivateRoute'
 import './App.css';
+import Import from './pages/Import';
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
         <Route exact path="/logout" component={() => <Logout setuser={setUser}/>} />
         <PrivateRoute exact path="/create" user={userTmp} component={() => <Create user={userTmp} />} />
         <PrivateRoute exact path="/view" user={userTmp} component={() => <View user={userTmp} />} />
+        <PrivateRoute exact path="/import" user={userTmp} component={() => <Import user={userTmp} />}/>
         <Route exact path="/404" component={NotFoundPage} />
         <Redirect to="/404" /> 
       </Switch>
