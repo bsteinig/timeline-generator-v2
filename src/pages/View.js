@@ -32,6 +32,10 @@ function View({user}){
         return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
     }
 
+    const exportJSON = () => {
+        document.getElementById("export-box").innerHTML = JSON.stringify(data[timelines[0][selected]].timeline)
+    }
+
     const handleSelect = (index) => {
         setSelected(index);
         console.log(index)
@@ -88,8 +92,8 @@ function View({user}){
                         <></>
                     :
                         <div className="export-section">
-                            <h3 className="export-btn">Export Timeline</h3>
-                            <textarea className="export-text">{JSON.stringify(data[timelines[0][selected]].timeline)}</textarea>
+                            <h3 className="export-btn" onClick={exportJSON}>Export Timeline</h3>
+                            <textarea id="export-box" className="export-text"></textarea>
                         </div>
                     }
                 </div>
@@ -112,12 +116,3 @@ function View({user}){
 }
 
 export default View;
-
-
-/*
-<tr key={workout}>
-                  <td>{data[workout].name}</td>
-                  <td>{data[workout].total}</td>
-                  <td>{dateToString(new Date(data[workout].updatedAt))}</td>
-                </tr>
-*/
