@@ -784,11 +784,11 @@ Export Section
 }
 
 .export-text{
-  height: 22rem;
+  height: 2rem;
   width: 48rem;
   margin-bottom: 3rem;
-  min-height: 10rem;
-  max-height: 30rem;
+  min-height: 1rem;
+  max-height: 2rem;
 }
 
 /***********

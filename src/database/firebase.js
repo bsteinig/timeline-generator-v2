@@ -74,8 +74,14 @@ export const getUserData = (user, callback) => {
   timelines.on('value', (snapshot) => {
     callback(snapshot.val());
   })
-  // ref.on("value", snapshot => {
-  //   const state = snapshot.val();
-  //   this.setState(state);
-  // });
 };
+
+export const getImportData = (user, callback) => {
+  var defaultDatabase = firebase.database();
+  let ref = defaultDatabase.ref("/");
+  let timelines = ref.child(`timelines/${user}`);
+  timelines.on('value', (snapshot) => {
+    callback(snapshot.val());
+  })
+};
+

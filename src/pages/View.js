@@ -33,9 +33,9 @@ function View({user}){
     }
 
     const exportJSON = () => {
-        console.log(data[timelines[0][selected]].timeline)
-        console.log(JSON.stringify(data[timelines[0][selected]].timeline))
-        document.getElementById("export-box").innerHTML = JSON.stringify(data[timelines[0][selected]].timeline)
+        var x = user.uid + "|" + timelines[0][selected]
+        console.log(x);
+        document.getElementById("export-box").innerHTML = x
     }
 
     const handleSelect = (index) => {
@@ -43,7 +43,6 @@ function View({user}){
             document.getElementById("export-box").innerHTML = ""
         }
         setSelected(index);
-        console.log(data[timelines[0][index]].timeline)
         window.timeline = new window.TL.Timeline('timeline-embed', data[timelines[0][index]].timeline);
     }
 

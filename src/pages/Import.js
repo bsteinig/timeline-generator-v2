@@ -1,17 +1,32 @@
-import React, {useState} from 'react'
+import React, { useState, useEffect } from 'react'
+import { getImportData } from "../database/firebase";
 
-function Import() {
+function Import({user}) {
 
-    const [importData, setImportData] = useState();
+    const [data, setData] = useState(null);
+    const [pulled, setPulled] = useState(false);
+    var userID, timelineID;
 
     const onChangeHandler = (e) => {
         console.log(e.target.value)
-        var d = JSON.parse(e.target.value)
-        setImportData(d)
+        var res = (e.target.value).split("|")
+        // 0 is userID , 1 is timelineID
+        setPulled(false)
+        userID = res[0]
+        timelineID = res[1]
     }
 
     const renderImport = () => {
-        window.timeline = new window.TL.Timeline('timeline-embed', importData);
+        if (!pulled) {
+            getImportData(userID, (retrivedData) => {
+              console.log(retrivedData);
+              if (retrivedData) {
+                setData(retrivedData);
+                setPulled(true);
+                window.timeline = new window.TL.Timeline('timeline-embed', retrivedData[timelineID].timeline);
+              }
+            });
+        }
     }
 
     return (
