@@ -126,53 +126,6 @@ Navbar
 }
 
 /*********
- Login page
-*********/
-
-.container-login {
-  display: flex;
-  justify-content: center;
-  padding-top: 3rem;
-  height: 100vh;
-  width: 100vw;
-  overflow: hidden;
-  background-color: var(--gray4);
-  box-shadow: 
-      inset 0px 1rem 2rem -2rem rgba(0, 0, 0, 0.7),
-      inset 0px -1rem 2rem -2rem rgba(0, 0, 0, 0.7); 
-}
-
-.login-card{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 1.5rem;
-  box-shadow: 0 .5rem 1rem 0 rgba(0,0,0,0.2);
-  transition: 0.3s ease-in-out; 
-  width: 25vw;
-  height: 60vh;
-  background-color: var(--blue);
-}
-
-.login-card:hover{
-  box-shadow: 0 1.5rem 2rem 0 rgba(0,0,0,0.2);
-}
-
-.login-text{
-  font-family: var(--card-title);
-  font-weight: 600;
-  color: var(--white);
-  font-size: 2.5rem;
-}
-
-.login-btn{
-  font-family: var(--card-font) !important;
-  margin-top: 2rem;
-  height: auto;
-  width: 40%;
-}
-
-/*********
 Title Form
 *********/
 
@@ -877,10 +830,73 @@ Export Section
   .export-text{
     width: 95vw;
   }
+  .logo-box {
+    width: 85vw;
+  }
 }
 
 @media screen and (max-width: 450px){
   .import-btn{
     width: 75vw;
   }
+  .logo-box {
+    width: 95vw;
+  }
+}
+
+/**********
+Login Page
+**********/
+
+.login-page {
+  display: flex;
+  justify-content: center;
+  padding-top: 3rem;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  background-color: var(--gray5);
+  box-shadow: 
+      inset 0px 1rem 2rem -2rem rgba(0, 0, 0, 0.7),
+      inset 0px -1rem 2rem -2rem rgba(0, 0, 0, 0.7); 
+}
+
+.logo-box{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.5rem;
+  border-radius: 2rem;
+  box-shadow: 0 .5rem 1rem 0 rgba(0,0,0,0.2);
+  transition: 0.3s ease-in-out; 
+  width: 45vw;
+  height: 60vh;
+  background-color: var(--gray6);
+}
+
+.logo-box:hover{
+  box-shadow: 0 1.5rem 2rem 0 rgba(0,0,0,0.2);
+}
+
+.login-text{
+  font-family: var(--card-title);
+  font-weight: 600;
+  color: var(--white);
+  font-size: 2.5rem;
+}
+
+.login-btn{
+  font-family: var(--card-font) !important;
+  margin-top: 2rem;
+  height: auto;
+  width: 40%;
+}
+
+.g-btn{
+  margin-top: 1rem;
+  background-color: var(--gray5);
+}
+
+.g-btn:hover{
+  background-color: var(--gray4);
 }

@@ -7,11 +7,12 @@ function Login({user, setUser}){
         return <Redirect to="/"/>    }
 
     return (
-        <div className="home-page">
-            <div className="logobox">
-            </div>
-            <div className="row">
-                <div className="col-md-12"> <button onClick={() => {signInWithGoogle(setUser)}} className="btn btn-lg btn-google btn-block text-uppercase btn-outline"><img alt="google" src="https://img.icons8.com/color/16/000000/google-logo.png"></img> Signup Using Google</button> </div>
+        <div className="login-page">
+            <div className="logo-box">
+                <h3 className="import-txt">Sign In to Continue</h3>
+                <div className="row">
+                    <div className="col-md-12 g-btn"> <button onClick={() => {signInWithGoogle(setUser)}} className="btn btn-lg btn-google btn-block text-uppercase btn-outline"><img alt="google" src="https://img.icons8.com/color/16/000000/google-logo.png"></img> Login with Google</button> </div>
+                </div>
             </div>
         </div>
     );

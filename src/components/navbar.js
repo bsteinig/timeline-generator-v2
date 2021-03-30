@@ -50,7 +50,7 @@ const Navbar = ({user}) => {
                         aria-expanded="false"
                     >
                         <span className="log-tag">Welcome Back, <span className="username">{user.displayName}</span></span>
-                        <img alt="user profile" className="propic" src={user.photoURL}width="35" height="35"/>
+                        <img alt="user profile" className="propic" src={user.photoURL}width="32" height="32"/>
                     </a>
                     <ul
                         className="dropdown-menu"
