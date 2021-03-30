@@ -27,7 +27,7 @@ const validationSchema = yup.object({
 })
 
 
-const Form = ({onSubmitForm, events, setEvents}) => {
+const Form = ({onSubmitForm, events, setEvents, title}) => {
 
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
@@ -48,31 +48,49 @@ const Form = ({onSubmitForm, events, setEvents}) => {
         var eDate;
         if(easyDate(today) === easyDate(endDate)){
             eDate = ["","",""];
+            setEvents([...events,{
+                media: {
+                    url: values.media,
+                    caption: values.mediaCaption,
+                    credit: values.mediaCredit
+                }, 
+                start_date: {
+                    year: sDate[0],
+                    month: sDate[1],
+                    day: sDate[2],
+                },
+                text: {
+                    headline: values.headline,
+                    text: values.text
+                },
+                id: uuid(),
+                end: 'n'
+            }]);
         }else{
             eDate = yearMonthDay(endDate);
+            setEvents([...events,{
+                media: {
+                    url: values.media,
+                    caption: values.mediaCaption,
+                    credit: values.mediaCredit
+                }, 
+                start_date: {
+                    year: sDate[0],
+                    month: sDate[1],
+                    day: sDate[2],
+                },
+                end_date: {
+                    year: eDate[0],
+                    month: eDate[1],
+                    day: eDate[2],
+                },
+                text: {
+                    headline: values.headline,
+                    text: values.text
+                },
+                id: uuid()
+            }]);
         }
-        setEvents([...events,{
-            media: {
-                url: values.media,
-                caption: values.mediaCaption,
-                credit: values.mediaCredit
-            }, 
-            start_date: {
-                year: sDate[0],
-                month: sDate[1],
-                day: sDate[2],
-            },
-            end_date: {
-                year: eDate[0],
-                month: eDate[1],
-                day: eDate[2],
-            },
-            text: {
-                headline: values.headline,
-                text: values.text
-            },
-            id: uuid()
-        }]);
         console.log(submitProps)
         submitProps.resetForm()
         setStartDate(new Date());
@@ -98,6 +116,9 @@ const Form = ({onSubmitForm, events, setEvents}) => {
             values
         }) => (
             <Formk className="formk">
+                <div class="header-row">
+                    <h1 className="time-title">&#9;{title}</h1>
+                </div>
                 <div className="form-row">
                     <div className="form-field">
                         <label htmlFor="headline" className="form-label">Headline:</label>

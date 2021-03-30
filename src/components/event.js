@@ -27,7 +27,7 @@ const Event = ({ fakeId, event, events, setEvents}) => {
                         <h5 className="entry">{event.media.credit}</h5>
                         <h4 className="tag">Image Caption:</h4>
                         <h5 className="entry">{event.media.caption}</h5>
-                        {event.end_date.year === "" ? 
+                        {event.end === 'n' ? 
                         <div>
                             <h4 className="tag">Event Date</h4>
                             <h5 className="entry">{DMYtoDate(event.start_date)}</h5>

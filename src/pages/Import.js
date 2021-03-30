@@ -18,12 +18,12 @@ function Import({user}) {
 
     const renderImport = () => {
         if (!pulled) {
-            getImportData(userID, (retrivedData) => {
-              console.log(retrivedData);
+            getImportData(userID, timelineID, (retrivedData) => {
               if (retrivedData) {
                 setData(retrivedData);
                 setPulled(true);
-                window.timeline = new window.TL.Timeline('timeline-embed', retrivedData[timelineID].timeline);
+                console.log("retrieved",retrivedData)
+                window.timeline = new window.TL.Timeline('timeline-embed', retrivedData.timeline);
               }
             });
         }

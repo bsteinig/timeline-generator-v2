@@ -6,12 +6,14 @@ import { writeUserData } from '../database/firebase';
 
 const LOCAL_STORAGE_KEY = "react-event-list_events"
 const VAR_KEY = "react-var-key"
+const LOCAL_TITLE_KEY = "react-title-key"
 
 function Create({user}){
     
     const [created, setCreated] = useState(false)
     const [title, setTitle] = useState({
         title: "",
+        text: "",
         titleMedia: "",
         titleMediaCredit: ""
     })
@@ -27,12 +29,17 @@ function Create({user}){
         if(storageVars){
             setCreated(storageVars[0]);
         }
+        const storageTitle = localStorage.getItem(LOCAL_TITLE_KEY);
+        if(storageTitle){
+            setTitle(JSON.parse(storageTitle));
+        }
     }, [])
 
     useEffect( () => {
         localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(events))
         var arr = [created]
         localStorage.setItem(VAR_KEY, JSON.stringify(arr))
+        localStorage.setItem(LOCAL_TITLE_KEY,JSON.stringify(title))
     }, [events, created])
 
     const formChangeHandler = (e) => {
@@ -59,7 +66,8 @@ function Create({user}){
             if(title.titleMedia === ""){
                 tData = {
                     text: {
-                        headline: title.title
+                        headline: title.title,
+                        text: title.text
                     }
                 }
             }else{
@@ -69,7 +77,8 @@ function Create({user}){
                         credit: title.titleMediaCredit
                     },
                     text: {
-                        headline: title.title
+                        headline: title.title,
+                        text: title.text
                     }
                 }
             }
@@ -85,6 +94,7 @@ function Create({user}){
             writeUserData(data);
             setEvents([]);
             localStorage.removeItem(LOCAL_STORAGE_KEY);
+            alert("Timeline Created! Find it on the View Page.")
         }
     }
 
@@ -92,7 +102,7 @@ function Create({user}){
         <div>
         {created ?
             <div className="timeline-tool">
-                <Form onSubmitForm={onSubmitForm} events={events} setEvents={setEvents}/>
+                <Form onSubmitForm={onSubmitForm} events={events} setEvents={setEvents} title={title.title}/>
                 <Eventlist events={events} setEvents={setEvents}/>
             </div>
         :
@@ -100,6 +110,8 @@ function Create({user}){
                 <form className="create-form" onSubmit={handleCreate}>
                     <label htmlFor="title" className="form-label">Timeline Title:</label>
                     <input type='text' id='title' name='title' className="form-input create-input" onChange={formChangeHandler} required/>
+                    <label htmlFor="text" className="form-label">Title Text:</label>
+                    <input type='text' id='text' name='text' className="form-input create-input" onChange={formChangeHandler}/>
                     <label htmlFor="title" className="form-label">Title Media:</label>
                     <input type='text' id='title' name='titleMedia' className="form-input create-input" onChange={formChangeHandler}/>
                     <label htmlFor="title" className="form-label">Media Credit</label>
