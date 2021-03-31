@@ -793,6 +793,19 @@ View Page
   background-color: var(--gray6);
 }
 
+.selection-row{
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 1rem;
+  width: 80vw;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.view-trash{
+  margin-left: 4rem;
+}
+
 #timeline-embed{
   width: 80vw;
   height: 75vh;

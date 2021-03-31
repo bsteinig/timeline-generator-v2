@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { getImportData } from "../database/firebase";
 
 function Import({user}) {
 
-    const [data, setData] = useState(null);
     const [pulled, setPulled] = useState(false);
     var userID, timelineID;
 
@@ -20,7 +19,6 @@ function Import({user}) {
         if (!pulled) {
             getImportData(userID, timelineID, (retrivedData) => {
               if (retrivedData) {
-                setData(retrivedData);
                 setPulled(true);
                 console.log("retrieved",retrivedData)
                 window.timeline = new window.TL.Timeline('timeline-embed', retrivedData.timeline);

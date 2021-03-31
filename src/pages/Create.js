@@ -93,7 +93,14 @@ function Create({user}){
             };
             writeUserData(data);
             setEvents([]);
+            setTitle({
+                title: "",
+                text: "",
+                titleMedia: "",
+                titleMediaCredit: ""
+            })
             localStorage.removeItem(LOCAL_STORAGE_KEY);
+            localStorage.removeItem(LOCAL_TITLE_KEY);
             alert("Timeline Created! Find it on the View Page.")
         }
     }

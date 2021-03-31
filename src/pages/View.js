@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Loader from 'react-loader-spinner'
-import { getUserData } from "../database/firebase";
+import { getUserData, removeUserData } from "../database/firebase";
 import TitleCard from '../components/titlecard'
 import '../App.css';
 
@@ -46,12 +46,19 @@ function View({user}){
         window.timeline = new window.TL.Timeline('timeline-embed', data[timelines[0][index]].timeline);
     }
 
+    const deleteHandler = () => {
+        removeUserData(user, timelines[0][selected])
+        document.getElementById("timeline-embed").className = ""
+        document.getElementById("timeline-embed").innerHTML = null
+        setSelected(-1)
+    }
+
     //console.log(Object.keys(data))
 
     return(
         <div className="todo-container">
             { loading ? 
-            <div class="spinner">
+            <div className="spinner">
                 <Loader
                     type="Rings"
                     color="#0f9bd1"
@@ -83,11 +90,15 @@ function View({user}){
                 </ul>
                 <div className="timeline-view">
                     <div className="selected">
-                        <h3>Selected:&nbsp;</h3>
                         {selected === -1 ?
                             <h3>Click to select a timeline, or create a new one</h3>
                         :
-                            <h3>{data[timelines[0][selected]].timeline.title.text.headline}</h3>
+                            <div className="selection-row">
+                                <h3>Selected:&nbsp;{data[timelines[0][selected]].timeline.title.text.headline}</h3>
+                                <button onClick={deleteHandler} className="trash view-trash">
+                                    <i className="fas fa-trash"></i>
+                                </button>
+                            </div>
                         }   
                     </div>
                     <div id='timeline-embed'></div>

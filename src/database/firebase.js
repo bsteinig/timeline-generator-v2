@@ -85,3 +85,9 @@ export const getImportData = (user, timeline, callback) => {
   })
 };
 
+export const removeUserData = (user, timeline) => {
+  var defaultDatabase = firebase.database();
+  let ref = defaultDatabase.ref("/");
+  let timelines = ref.child(`timelines/${user.uid}/${timeline}`);
+  timelines.remove()
+};
