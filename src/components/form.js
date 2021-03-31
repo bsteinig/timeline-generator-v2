@@ -31,6 +31,7 @@ const Form = ({onSubmitForm, events, setEvents, title}) => {
 
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
+    const [calToggle, setCalToggle] = useState(false);
     const today = new Date();
 
     function easyDate(date) {
@@ -106,6 +107,24 @@ const Form = ({onSubmitForm, events, setEvents, title}) => {
         values.dateEnd = (easyDate(today) === easyDate(endDate) ? "" : easyDate(endDate));;
     }
 
+    const toggleCal = (e) => {
+        console.log(e)
+        if(e === true){ //single click
+            setCalToggle(true);
+            document.getElementById("left").style.backgroundColor = "#0f9bd1"
+            document.getElementById("left").style.color = "#F2F2F2"
+            document.getElementById("right").style.backgroundColor = "#E0E0E0"
+            document.getElementById("right").style.color = "#4F4F4F"
+        }else{
+            setCalToggle(false);
+            document.getElementById("right").style.backgroundColor = "#0f9bd1"
+            document.getElementById("right").style.color = "#F2F2F2"
+            document.getElementById("left").style.backgroundColor = "#E0E0E0"
+            document.getElementById("left").style.color = "#4F4F4F"
+        }
+        console.log(calToggle)
+    }
+
     return (
         <Formik
             initialValues={initialValues}
@@ -148,19 +167,30 @@ const Form = ({onSubmitForm, events, setEvents, title}) => {
                         <ErrorMessage name='mediaCaption'>{msg => <div className="error-msg">{msg}</div>}</ErrorMessage>
                     </div> 
                 </div>
+                    <div className="toggle-master">
+                        <label htmlFor="date type" className="form-label">Date Type:</label>
+                        <div className="toggle-group">
+                            <button id="left" className="toggle toggle-left" type="button" onClick={() => toggleCal(true)}>Single</button>
+                            <button id="right" className="toggle toggle-right" type="button" onClick={() => toggleCal(false)}>Range</button>
+                        </div>
+                    </div>
                 <div className="form-row">
                     <div className="form-field">
-                        <label htmlFor="start date" className="form-label">Start/Event Date:</label>
+                        <label htmlFor="start date" className="form-label">{calToggle ? `Event Date:` : `Start Date:`}</label>
                         <Field className="cal-input form-input" type="text" id="dateStart" name="dateStart" disabled={true} value={easyDate(startDate)} onChange={startDateChange(values)}></Field>
                         <Calendar onChange={setStartDate} value={startDate} defaultView="decade"  defaultValue={startDate} className="cal"/>
                         <ErrorMessage name="dateStart">{msg => <div className="error-msg">{msg}</div>}</ErrorMessage>
                     </div>
+                    {calToggle ?
+                    <></>
+                    :
                     <div className="form-field">
                         <label htmlFor="end date" className="form-label">End Date:</label>
                         <Field className="cal-input form-input" type="text" id="dateEnd" name="dateEnd" disabled={true} value={easyDate(endDate)} onChange={endDateChange(values)}></Field>
                         <Calendar onChange={setEndDate} value={endDate} defaultView="decade"  defaultValue={(endDate)} className="cal"/>
                         <ErrorMessage name="dateEnd">{msg => <div className="error-msg">{msg}</div>}</ErrorMessage>
                     </div>
+                    }
                 </div>
                 
                 <div className="submit-btn">
