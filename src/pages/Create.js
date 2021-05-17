@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Form from '../components/form'
 import Eventlist from '../components/eventlist'
 import '../App.css';
-import { writeUserData } from '../database/firebase';
+import { writeUserData, logUserActivity} from '../database/firebase';
 
 const LOCAL_STORAGE_KEY = "react-event-list_events"
 const VAR_KEY = "react-var-key"
@@ -54,7 +54,9 @@ function Create({user}){
         setCreated(created => !created)
         alert("Timeline created. Use the form to create events for your timeline.")
         console.log(title)
-
+        // Create, Add Event, Submit
+        let data = {time: new Date(), action: 'Create'}
+        logUserActivity(user,data)
     }
 
     const onSubmitForm = () => {
@@ -101,6 +103,8 @@ function Create({user}){
             })
             localStorage.removeItem(LOCAL_STORAGE_KEY);
             localStorage.removeItem(LOCAL_TITLE_KEY);
+            let log = {time: new Date(), action: 'Submit'}
+            logUserActivity(user,log)
             alert("Timeline Created! Find it on the View Page.")
         }
     }
@@ -109,7 +113,7 @@ function Create({user}){
         <div>
         {created ?
             <div className="timeline-tool">
-                <Form onSubmitForm={onSubmitForm} events={events} setEvents={setEvents} title={title.title}/>
+                <Form user={user} onSubmitForm={onSubmitForm} events={events} setEvents={setEvents} title={title.title}/>
                 <Eventlist events={events} setEvents={setEvents}/>
             </div>
         :

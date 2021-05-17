@@ -3,6 +3,7 @@ import {v4 as uuid} from 'uuid'
 import { Formik, Form as Formk ,Field, ErrorMessage } from 'formik'
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
+import { logUserActivity } from '../database/firebase';
 import * as yup from 'yup'
 
 // Formik  Props
@@ -27,7 +28,7 @@ const validationSchema = yup.object({
 })
 
 
-const Form = ({onSubmitForm, events, setEvents, title}) => {
+const Form = ({user, onSubmitForm, events, setEvents, title}) => {
 
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
@@ -44,6 +45,8 @@ const Form = ({onSubmitForm, events, setEvents, title}) => {
 
     const onSubmit = (values, submitProps) => {
         console.log('Form data', values)
+        let log = {time: new Date(), action: 'Add Event'}
+        logUserActivity(user,log)
         console.log(easyDate(today));
         var sDate = yearMonthDay(startDate);
         var eDate;

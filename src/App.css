@@ -545,7 +545,7 @@ Submit Button
   overflow: hidden;
 }
 
-.card:hover{ 
+.card-view:hover{ 
   background-color: var(--gray4);
   color: var(--white) !important;
 }
@@ -632,6 +632,7 @@ Trash button
   font-size: 30em;
   color: #35c6ff;
   font-family: var(--card-title);
+  font-weight: 900;
   bottom: -7rem;
   right: 0rem;
   z-index: 1;
@@ -674,6 +675,10 @@ Trash button
   transition: all 0.3s ease;
   border: none;
   z-index: 12;
+}
+
+.trash-small{
+  height: 2rem;
 }
 
 .trash:hover {
@@ -802,8 +807,19 @@ View Page
   align-items: center;
 }
 
+.btn-grp{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
 .view-trash{
-  margin-left: 4rem;
+  margin-left: .5rem;
+}
+
+.view-edit{
+  padding-left: .75rem;
+  padding-right: .5rem;
 }
 
 #timeline-embed{

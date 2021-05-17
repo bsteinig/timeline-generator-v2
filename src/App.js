@@ -3,17 +3,18 @@ import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-d
 import Home from './pages/Home';
 import Create from './pages/Create'
 import View from './pages/View'
+import Import from './pages/Import';
+import Edit from './pages/Edit'
 import NotFoundPage from './pages/404'
 import SignInPage, {Logout} from './components/login';
 import Navbar from './components/navbar'
 import PrivateRoute from './PrivateRoute'
 import './App.css';
-import Import from './pages/Import';
+
 
 
 function App() {
   
-
   const [user, setUser] = useState(null);
   let userTmp = localStorage.getItem("user");
   if(userTmp){
@@ -30,6 +31,7 @@ function App() {
         <PrivateRoute exact path="/create" user={userTmp} component={() => <Create user={userTmp} />} />
         <PrivateRoute exact path="/view" user={userTmp} component={() => <View user={userTmp} />} />
         <PrivateRoute exact path="/import" user={userTmp} component={() => <Import user={userTmp} />}/>
+        <PrivateRoute exact path="/edit" user={userTmp} component={() => <Edit user={userTmp} />}/>
         <Route exact path="/404" component={NotFoundPage} />
         <Redirect to="/404" /> 
       </Switch>

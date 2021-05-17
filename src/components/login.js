@@ -1,11 +1,11 @@
 import React, {useEffect} from 'react' 
 import { Redirect } from 'react-router-dom'
-import { signInWithGoogle, logOut } from '../database/firebase'
+import { signInWithGoogle, logOut, logUserActivity } from '../database/firebase'
 
 function Login({user, setUser}){
     if(user){
-        return <Redirect to="/"/>    }
-
+        return <Redirect to="/"/>    
+    }
     return (
         <div className="login-page">
             <div className="logo-box">

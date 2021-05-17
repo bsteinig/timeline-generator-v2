@@ -9,13 +9,12 @@ import { Redirect, Route } from 'react-router-dom'
 const PrivateRoute = ({ component: Component, user, ...rest }) => {
 
   // Add your own authentication on the below line.
-  console.log(user);
   const isLoggedIn = user ? true : false;
 
   return (
     <Route
       {...rest}
-      render={props =>
+      render={props => 
         isLoggedIn ? (
           <Component {...props} />
         ) : (

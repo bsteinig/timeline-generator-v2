@@ -29,6 +29,8 @@ export const signInWithGoogle = (setUser) => {
     }
     console.log(user);
     localStorage.setItem("user", JSON.stringify(user))
+    let log = {time: new Date(), action: 'Login'}
+    logUserActivity(user,log)
     setUser("logged in");
   }).catch((error) => {
     console.log(error.message)
@@ -91,3 +93,10 @@ export const removeUserData = (user, timeline) => {
   let timelines = ref.child(`timelines/${user.uid}/${timeline}`);
   timelines.remove()
 };
+
+export const logUserActivity = (user, data) => {
+  var defaultDatabase = firebase.database();
+  let ref = defaultDatabase.ref("/");
+  let logs = ref.child(`logs/${user.uid}/${data.time}`);
+  logs.set(data.action)
+}

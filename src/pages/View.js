@@ -4,6 +4,7 @@ import { getUserData, removeUserData } from "../database/firebase";
 import TitleCard from '../components/titlecard'
 import '../App.css';
 
+const EDIT_KEY = "react-editing-key"
 
 function View({user}){
 
@@ -29,7 +30,16 @@ function View({user}){
     }, []);
 
     function dateToString(date) {
-        return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
+        let hours = date.getHours()
+        var time;
+        var minutes = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+        if(hours > 12){
+            hours = hours - 12
+            time = `${hours}:${minutes} PM`
+        }else{
+            time = hours === 12 ? `${hours}:${minutes} PM` : `${hours}:${minutes} AM`
+        }
+        return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()} ${time}`;
     }
 
     const exportJSON = () => {
@@ -43,14 +53,18 @@ function View({user}){
             document.getElementById("export-box").innerHTML = ""
         }
         setSelected(index);
+        var arr = [user.uid,timelines[0][index]]
+        localStorage.setItem(EDIT_KEY, JSON.stringify(arr))
         window.timeline = new window.TL.Timeline('timeline-embed', data[timelines[0][index]].timeline);
     }
 
     const deleteHandler = () => {
-        removeUserData(user, timelines[0][selected])
-        document.getElementById("timeline-embed").className = ""
-        document.getElementById("timeline-embed").innerHTML = null
-        setSelected(-1)
+        if(window.confirm("click OK to delete timeline")){
+            removeUserData(user, timelines[0][selected])
+            document.getElementById("timeline-embed").className = ""
+            document.getElementById("timeline-embed").innerHTML = null
+            setSelected(-1)
+        }
     }
 
     //console.log(Object.keys(data))
@@ -95,9 +109,15 @@ function View({user}){
                         :
                             <div className="selection-row">
                                 <h3>Selected:&nbsp;{data[timelines[0][selected]].timeline.title.text.headline}</h3>
-                                <button onClick={deleteHandler} className="trash view-trash">
-                                    <i className="fas fa-trash"></i>
-                                </button>
+                                <div className="btn-grp">
+                                    <a href="/edit" className="trash view-edit">
+                                        <i className="fas fa-edit"></i>
+                                    </a>
+                                    <button onClick={deleteHandler} className="trash view-trash">
+                                        <i className="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                                
                             </div>
                         }   
                     </div>
