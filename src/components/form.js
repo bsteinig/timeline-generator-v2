@@ -45,8 +45,8 @@ const Form = ({user, onSubmitForm, events, setEvents, title}) => {
 
     const onSubmit = (values, submitProps) => {
         console.log('Form data', values)
-        let log = {time: new Date(), action: 'Add Event'}
-        logUserActivity(user,log)
+        let log = {userId: user.uid, action: 'Add Event', title: values.headline, text: values.text}
+        logUserActivity(log)
         console.log(easyDate(today));
         var sDate = yearMonthDay(startDate);
         var eDate;

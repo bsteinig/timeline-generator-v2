@@ -5,6 +5,7 @@ import Create from './pages/Create'
 import View from './pages/View'
 import Import from './pages/Import';
 import Edit from './pages/Edit'
+import Logs from './pages/Logs'
 import NotFoundPage from './pages/404'
 import SignInPage, {Logout} from './components/login';
 import Navbar from './components/navbar'
@@ -32,6 +33,7 @@ function App() {
         <PrivateRoute exact path="/view" user={userTmp} component={() => <View user={userTmp} />} />
         <PrivateRoute exact path="/import" user={userTmp} component={() => <Import user={userTmp} />}/>
         <PrivateRoute exact path="/edit" user={userTmp} component={() => <Edit user={userTmp} />}/>
+        <Route exact path="/logs" component={() => <Logs />}/>
         <Route exact path="/404" component={NotFoundPage} />
         <Redirect to="/404" /> 
       </Switch>

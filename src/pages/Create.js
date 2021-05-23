@@ -55,8 +55,8 @@ function Create({user}){
         alert("Timeline created. Use the form to create events for your timeline.")
         console.log(title)
         // Create, Add Event, Submit
-        let data = {time: new Date(), action: 'Create'}
-        logUserActivity(user,data)
+        let data = {userId: user.uid, action: 'Create', title: title.title, text: title.text}
+        logUserActivity(data)
     }
 
     const onSubmitForm = () => {
@@ -103,8 +103,8 @@ function Create({user}){
             })
             localStorage.removeItem(LOCAL_STORAGE_KEY);
             localStorage.removeItem(LOCAL_TITLE_KEY);
-            let log = {time: new Date(), action: 'Submit'}
-            logUserActivity(user,log)
+            let log = {userId: user.uid, action: 'Submit', title: tData.text.headline, text: tData.text.text}
+            logUserActivity(log)
             alert("Timeline Created! Find it on the View Page.")
         }
     }

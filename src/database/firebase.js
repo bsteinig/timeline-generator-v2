@@ -29,8 +29,8 @@ export const signInWithGoogle = (setUser) => {
     }
     console.log(user);
     localStorage.setItem("user", JSON.stringify(user))
-    let log = {time: new Date(), action: 'Login'}
-    logUserActivity(user,log)
+    let log = {userId: user.uid, action: 'Login', title: '', text: ''}
+    logUserActivity(log)
     setUser("logged in");
   }).catch((error) => {
     console.log(error.message)
@@ -94,9 +94,31 @@ export const removeUserData = (user, timeline) => {
   timelines.remove()
 };
 
-export const logUserActivity = (user, data) => {
+export const logUserActivity = (data) => {
   var defaultDatabase = firebase.database();
   let ref = defaultDatabase.ref("/");
-  let logs = ref.child(`logs/${user.uid}/${data.time}`);
-  logs.set(data.action)
+  data.time =  firebase.database.ServerValue.TIMESTAMP;
+  ref.child("logs").get().then((snapshot) => {
+    if (snapshot.exists()) {
+      let arr = snapshot.val();
+      arr.push(data)
+      let newLog = ref.child(`logs`)
+      newLog.set(arr)
+    } else {
+      let arr = [data]
+      let newLog = ref.child(`logs`)
+      newLog.set(arr)
+    }
+  }).catch((error) => {
+    console.error(error);
+  });
+}
+
+export const fetchUserLogs = (callback) => {
+  var defaultDatabase = firebase.database();
+  let ref = defaultDatabase.ref("/");
+  let logs = ref.child('logs')
+  logs.on('value', (snapshot) => {
+    callback(snapshot.val())
+  })
 }
